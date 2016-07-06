@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.design.widget.Snackbar;
@@ -59,7 +61,13 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onProgramieClick(MenuItem item) {
         Snackbar.make(this.findViewById(android.R.id.content).getRootView(), "Created by: Kamil Kolmus\nVersion: 1.6", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
-    }public void onNavigationClick(MenuItem item) {
+    }
+    public void onNavigationClick(MenuItem item) {
+
+        startActivity(new Intent(getApplicationContext(), NavigationPopup.class));
+//        FragmentManager fm = getSupportFragmentManager();
+//        DialogFragment newFragment = new NavigationDialog();
+//        newFragment.show(fm,"Mydialog");
 
 
     }
