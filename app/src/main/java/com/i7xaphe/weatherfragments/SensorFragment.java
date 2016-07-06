@@ -2,11 +2,13 @@ package com.i7xaphe.weatherfragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,19 +46,23 @@ public class SensorFragment extends Fragment implements View.OnClickListener {
     static double pressure = 0;
     String receiveData = "";
     static MyAsyncTask myAsyncTask;
-    Context context;
+    static Context context;
     Button bSave,bTimer;
     static Animation animHide;
     boolean CreatedOnce;
+    SharedPreferences sheredpreferences;
 
     public static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/MyWeatherApp";
     public static String fullfilepath=path+"/weather.txt";
-    String url = "http://192.168.8.99";
+    static String url = "http://192.168.8.99";
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.sensor_fragment,container,false);
         context = getContext();
+
+        sheredpreferences = this.getActivity().getSharedPreferences("com.i7xaphe.weatherfragments", Context.MODE_PRIVATE);
+        url=sheredpreferences.getString("Last_URL","http://192.168.8.99");
 
         textViewTemp = (TextView) v.findViewById(R.id.textWiewTemperature);
         textViewPress = (TextView) v.findViewById(R.id.textWiewPressure);
@@ -78,7 +84,7 @@ public class SensorFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public void onSwipeTop() {
-
+                gotoUrlDialog();
             }
 
             @Override
@@ -151,9 +157,10 @@ public class SensorFragment extends Fragment implements View.OnClickListener {
             while (true) {
                 try {
                     receiveData = getUrlContent(url);
-                    Thread.sleep(1000);
                     publishProgress(SessionCounter);
                     SessionCounter++;
+                    Thread.sleep(1000);
+
 
 
                 } catch (Exception e) {
@@ -209,5 +216,12 @@ public class SensorFragment extends Fragment implements View.OnClickListener {
                 SensorFragment.light + " lx   PRESSURE = " + SensorFragment.pressure + " hPa                   " +
                 currentDateandTime + "";
         MyFileClass.AddNewDataToLoadedFile2(SensorFragment.fullfilepath, s[0]);
+    }
+    private void gotoUrlDialog() {
+
+        FragmentManager fm = getFragmentManager();
+        UrlDialog urldialog = new UrlDialog();
+        urldialog.show(fm,"Mydialog");
+
     }
 }

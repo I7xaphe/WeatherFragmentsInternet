@@ -120,7 +120,7 @@
         android:layout_marginTop="320dp"
         android:orientation="horizontal"
 
-        >
+        android:id="@+id/linearLayout">
 
         <TextView
             android:id="@+id/textWiewLight"
@@ -203,4 +203,5 @@
         android:id="@+id/pulse_text"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

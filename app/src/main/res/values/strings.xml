@@ -31,5 +31,7 @@
     <string name="navigation">Navigation</string>
     <string name="no_connection">NO CONNECTION</string>
     <string name="run_in_background">Run in background</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
 
 </resources>
